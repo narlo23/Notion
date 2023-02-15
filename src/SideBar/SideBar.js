@@ -1,7 +1,9 @@
+import AddPageBtn from "./AddPageBtn.js";
 import DocumentList from "./DocumentList.js";
 import Header from "./Header.js";
+import { getDocuments } from "../api/api.js";
 
-export default function SideBar({ $target }) {
+export default function SideBar({ $target, initialState, onClick }) {
   const $sidebar = document.createElement("div");
   $sidebar.className = "sideBar";
   $target.appendChild($sidebar);
@@ -20,11 +22,23 @@ export default function SideBar({ $target }) {
 
   const $documentList = new DocumentList({
     $target: $sidebar,
-    initialState: {},
+    initialState: {
+      documents: ["가", "나", "다"],
+    },
+    onClick: {},
   });
 
-  this.render = () => {};
+  const $addPageBtn = new AddPageBtn({
+    $target: $sidebar,
+    onClick: {},
+  });
+
+  this.render = async () => {
+    const $documents = await getDocuments();
+    $documentList.setState({
+      $documents,
+    });
+  };
 
   this.render();
 }
-

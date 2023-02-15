@@ -7,8 +7,8 @@ export default function Header({ $target, initialState }) {
 
   this.render = () => {
     $header.innerHTML = `
-            <p>${this.state.userName}</p>
-        `;
+      <p>${this.state.userName}</p>
+    `;
   };
 
   this.render();

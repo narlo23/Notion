@@ -1,3 +1,4 @@
+import Post from "./Post/Post.js";
 import SideBar from "./SideBar/SideBar.js";
 
 export default function App({ $target }) {
@@ -5,7 +6,10 @@ export default function App({ $target }) {
     $target,
   });
 
+  const $post = new Post({
+    $target,
+  });
+
   this.route = () => {};
   this.route();
 }
-

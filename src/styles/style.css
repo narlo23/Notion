@@ -1,14 +1,31 @@
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  display: flex;
+}
+
+.App {
+  width: 100vw;
+  height: 100%;
+}
 .sideBar {
   display: flex;
   flex-direction: column;
+  float: left;
   width: 25%;
+  min-width: 25%;
   height: 100%;
   background-color: rgb(251, 251, 250);
   font-size: 15px;
+  margin: 0;
+  border: 1px solid rgb(230, 230, 230);
+  box-sizing: border-box;
 }
 
 .sidebar_Header {
   font-weight: bold;
+  padding-left: 10px;
 }
 
 .document_ul {
@@ -62,3 +79,84 @@
   opacity: 1;
 }
 
+.addPageDiv {
+  width: 25%;
+  height: 40px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  border: 1px solid rgb(230, 230, 230);
+  box-sizing: border-box;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.addPageDiv:hover {
+  background-color: rgb(238, 238, 238);
+}
+
+.newPageParagraph {
+  font-size: 13px;
+  margin: 0;
+  color: gray;
+}
+
+.post {
+  float: right;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 75%;
+  overflow: hidden;
+}
+
+.postbody {
+  padding: 10px 20px;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.title {
+  display: block;
+  width: 100%;
+  height: 10%;
+  border: none;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.title:focus {
+  outline: none;
+}
+.title::placeholder {
+  color: lightgray;
+}
+
+.body {
+  width: 100%;
+  border: none;
+  resize: none;
+  height: 90%;
+  font-size: 15px;
+}
+
+.body::placeholder {
+  color: lightgray;
+}
+
+.body:focus {
+  outline: none;
+}
+
+.Breadcrumb {
+  padding: 10px 20px;
+  box-sizing: border-box;
+}
+
+.Breadcrumb__item {
+  display: inline-block;
+  font-size: 13px;
+}

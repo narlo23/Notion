@@ -1,4 +1,5 @@
-export default function DocumentList({ $target, initialState }) {
+import AddPageBtn from "/src/SideBar/AddPageBtn.js";
+export default function DocumentList({ $target, initialState, addPage }) {
   const $documentList = document.createElement("div");
   $documentList.className = "documentList";
   $target.appendChild($documentList);
@@ -6,28 +7,59 @@ export default function DocumentList({ $target, initialState }) {
   this.state = initialState;
 
   this.setState = (nextState) => {
-    this.state = { ...this.state, nextState };
+    this.state = nextState;
     this.render();
   };
 
-  const showDocumentList = () => {
-    $documentList.innerHTML = `
-        <ul class="document_ul">
-            <li class="document_li">
-            <svg viewBox="0 0 15 15" class="chevronDownRoundedThick">
-                <path d="M6.02734 8.80274C6.27148 8.80274 6.47168 8.71484 6.66211 8.51465L10.2803 4.82324C10.4268 4.67676 10.5 4.49609 10.5 4.28125C10.5 3.85156 10.1484 3.5 9.72363 3.5C9.50879 3.5 9.30859 3.58789 9.15234 3.74902L6.03223 6.9668L2.90722 3.74902C2.74609 3.58789 2.55078 3.5 2.33105 3.5C1.90137 3.5 1.55469 3.85156 1.55469 4.28125C1.55469 4.49609 1.62793 4.67676 1.77441 4.82324L5.39258 8.51465C5.58789 8.71973 5.78808 8.80274 6.02734 8.80274Z" />
-            </svg>
-                <p class="document_name">가</p>
-                <button class="document_add_button" type="button">+</button>
-            </li>
+  let showSubLists = false;
 
-        </ul>
+  const arrowBtn = `<img class="arrow-right" src="/src/assets/arrow.png" />`;
+
+  const showDocumentList = (documents, depth) => {
+    $documentList.innerHTML = `
+        ${documents
+          .map(
+            ({ id, title, documents }) =>
+              `
+          <li class="document_li" key=${id}>
+          <button class="showSubListsBtn" type="button">
+            ${arrowBtn}
+          </button>
+            <p class="document_name">${title ? title : "제목 없음"}</p>
+            <button class="document_delete_button" type="button">
+              <img class="delete" src="/src/assets/delete.png" />
+            </button>
+            <button class="document_add_button" type="button">+</button>
+          </li>
+          ${
+            showSubLists && documents.length
+              ? showDocumentList(documents, depth + 1)
+              : `<li class="sub_nothing" style="padding-left: ${
+                  (depth + 1) * 20
+                }px;
+                display: ${
+                  showSubLists ? "block" : "none"
+                }">하위 페이지 없음</li>`
+          }
+          `
+          )
+          .join("")}
     `;
   };
 
   this.render = () => {
-    showDocumentList();
+    console.log(this.state);
+    showDocumentList(this.state, 0);
   };
+
+  $documentList.addEventListener("click", (e) => {
+    const { target } = e;
+    const $li = target.closest("li");
+    if (!$li) {
+      return;
+    }
+    console.log($li);
+  });
+
   this.render();
 }
-

@@ -1,7 +1,9 @@
+import AddPageBtn from "./AddPageBtn.js";
 import DocumentList from "./DocumentList.js";
 import Header from "./Header.js";
+import { getDocuments, createDocument } from "../api/api.js";
 
-export default function SideBar({ $target }) {
+export default function SideBar({ $target, initialState, addPage }) {
   const $sidebar = document.createElement("div");
   $sidebar.className = "sideBar";
   $target.appendChild($sidebar);
@@ -20,11 +22,22 @@ export default function SideBar({ $target }) {
 
   const $documentList = new DocumentList({
     $target: $sidebar,
-    initialState: {},
+    initialState: [],
+    addPage,
   });
 
-  this.render = () => {};
+  const $addPageBtn = new AddPageBtn({
+    $target: $sidebar,
+    initialState: {
+      text: "제목 없음",
+    },
+  });
+
+  this.render = async () => {
+    const $documents = await getDocuments();
+    console.log($documents);
+    $documentList.setState($documents);
+  };
 
   this.render();
 }
-

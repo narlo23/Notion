@@ -173,6 +173,7 @@ body {
   width: 10px;
   height: 10px;
   margin: 0;
+  pointer-events: none;
 }
 
 #to-right {
@@ -182,6 +183,7 @@ body {
 .delete {
   width: 10px;
   height: 12px;
+  pointer-events: none;
 }
 
 .document_add_button,

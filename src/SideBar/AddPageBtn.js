@@ -1,11 +1,11 @@
-export default function AddPageBtn({ $target, initialState, createNewPage }) {
+export default function AddPageBtn({ $target, initialState, addPage }) {
   const $addPageDiv = document.createElement("div");
   $addPageDiv.className = "addPageDiv";
   $target.appendChild($addPageDiv);
 
   this.state = initialState;
 
-  const addPage = () => {
+  const NewButton = () => {
     $addPageDiv.innerHTML = `
         <button class="document_add_button" type="button">+</button>
         <p class="newPageParagraph">${this.state.text}</p>
@@ -13,11 +13,11 @@ export default function AddPageBtn({ $target, initialState, createNewPage }) {
   };
 
   this.render = () => {
-    addPage();
+    NewButton();
   };
 
   $addPageDiv.addEventListener("click", () => {
-    createNewPage();
+    addPage();
   });
 
   this.render();

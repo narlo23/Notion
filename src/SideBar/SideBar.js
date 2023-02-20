@@ -1,16 +1,22 @@
 import AddPageBtn from "./AddPageBtn.js";
 import DocumentList from "./DocumentList.js";
 import Header from "./Header.js";
-import { getDocuments, createDocument } from "../api/api.js";
 
-export default function SideBar({ $target, initialState, addPage }) {
+export default function SideBar({
+  $target,
+  initialState,
+  addPage,
+  deletePage,
+}) {
   const $sidebar = document.createElement("div");
   $sidebar.className = "sideBar";
   $target.appendChild($sidebar);
 
+  this.state = initialState;
+
   this.setState = (nextState) => {
-    this.state = { ...this.state, nextState };
-    this.render();
+    this.state = nextState;
+    $documentList.setState(this.state);
   };
 
   const $header = new Header({
@@ -22,22 +28,20 @@ export default function SideBar({ $target, initialState, addPage }) {
 
   const $documentList = new DocumentList({
     $target: $sidebar,
-    initialState: [],
+    initialState: this.state,
     addPage,
+    deletePage,
   });
 
   const $addPageBtn = new AddPageBtn({
     $target: $sidebar,
     initialState: {
-      text: "제목 없음",
+      text: "새 페이지",
     },
+    addPage,
   });
 
-  this.render = async () => {
-    const $documents = await getDocuments();
-    console.log($documents);
-    $documentList.setState($documents);
-  };
+  this.render = () => {};
 
   this.render();
 }

@@ -1,5 +1,11 @@
 import AddPageBtn from "/src/SideBar/AddPageBtn.js";
-export default function DocumentList({ $target, initialState, addPage }) {
+import { deleteDocument } from "../api/api.js";
+export default function DocumentList({
+  $target,
+  initialState,
+  addPage,
+  deletePage,
+}) {
   const $documentList = document.createElement("div");
   $documentList.className = "documentList";
   $target.appendChild($documentList);
@@ -21,11 +27,11 @@ export default function DocumentList({ $target, initialState, addPage }) {
           .map(
             ({ id, title, documents }) =>
               `
-          <li class="document_li" key=${id}>
+          <li class="document_li" key=${id} id=${id}>
           <button class="showSubListsBtn" type="button">
             ${arrowBtn}
           </button>
-            <p class="document_name">${title ? title : "제목 없음"}</p>
+            <p class="document_name">${title ? title : id}</p>
             <button class="document_delete_button" type="button">
               <img class="delete" src="/src/assets/delete.png" />
             </button>
@@ -48,17 +54,35 @@ export default function DocumentList({ $target, initialState, addPage }) {
   };
 
   this.render = () => {
-    console.log(this.state);
-    showDocumentList(this.state, 0);
+    showDocumentList(this.state.documentList, 0);
   };
 
   $documentList.addEventListener("click", (e) => {
     const { target } = e;
     const $li = target.closest("li");
+    if ($li) {
+      if (e.target.className === "document_delete_button") {
+        const id = $li.id;
+        deletePage(id);
+        console.log("삭제");
+      }
+    }
+    /*
+    if (target.className === "document_delete_button") {
+      const documentId = target.closest("li").id;
+      if (!documentId) {
+        alert("삭제할 수 없는 문서입니다.");
+      } else {
+        Delete(documentId);
+      }
+    }
+
+    const $li = target.closest("li");
     if (!$li) {
       return;
     }
     console.log($li);
+    */
   });
 
   this.render();

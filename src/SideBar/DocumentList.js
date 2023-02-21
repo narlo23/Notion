@@ -21,13 +21,12 @@ export default function DocumentList({
 
   const arrowBtn = `<img class="arrow-right" src="/src/assets/arrow.png" />`;
 
-  const showDocumentList = (documents, depth) => {
+  const showDocumentList = (Root_documents, depth) => {
     $documentList.innerHTML = `
-        ${documents
-          .map(
-            ({ id, title, documents }) =>
-              `
-          <li class="document_li" key=${id} id=${id}>
+        ${Root_documents.map(
+          ({ id, title, documents }) =>
+            `
+          <li data-id="${id}" class="document_li" key=${id} >
           <button class="showSubListsBtn" type="button">
             ${arrowBtn}
           </button>
@@ -48,8 +47,7 @@ export default function DocumentList({
                 }">하위 페이지 없음</li>`
           }
           `
-          )
-          .join("")}
+        ).join("")}
     `;
   };
 
@@ -58,13 +56,21 @@ export default function DocumentList({
   };
 
   $documentList.addEventListener("click", (e) => {
-    const { target } = e;
-    const $li = target.closest("li");
+    const $li = e.target.closest("li");
+    const { id } = $li.dataset;
     if ($li) {
       if (e.target.className === "document_delete_button") {
-        const id = $li.id;
         deletePage(id);
-        console.log("삭제");
+      } else if (e.target.className === "showSubListsBtn") {
+        //sublists보여주기
+      } else if (e.target.className === "document_add_button") {
+        //sublist에 추가하기
+        addPage(Number(id));
+      } else {
+        //document list 클릭
+        this.setState({ ...this.state, selected: Number(id) });
+        console.log(this.state);
+        return;
       }
     }
     /*

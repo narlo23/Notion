@@ -10,34 +10,38 @@ export default function Post({ $target, initialState }) {
   this.state = initialState;
 
   this.setState = (nextState) => {
-    this.state = { ...this.state, nextState };
+    this.state = nextState;
     this.render();
   };
 
-  const $breadCrumb = new Breadcrumb({
-    $target: $post,
-    initialState: [
-      {
-        id: 1,
-        name: "root",
-      },
-      {
-        id: 2,
-        name: "child1",
-      },
-    ],
-  });
+  this.render = () => {
+    if (this.state.selected === "") {
+      const $postbody = new PostBody({
+        $target: $post,
+      });
+    } else {
+      const $breadCrumb = new Breadcrumb({
+        $target: $post,
+        initialState: [
+          {
+            id: 1,
+            name: "root",
+          },
+          {
+            id: 2,
+            name: "child1",
+          },
+        ],
+      });
 
-  const $editor = new Editor({
-    $target: $post,
-    initialState: {},
-  });
-
-  /*
-  const $postbody = new PostBody({
-    $target: $post,
-  });
-*/
-  this.render = () => {};
+      const $editor = new Editor({
+        $target: $post,
+        initialState: {
+          title: "",
+          content: "",
+        },
+      });
+    }
+  };
   this.render();
 }

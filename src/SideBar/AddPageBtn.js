@@ -17,7 +17,11 @@ export default function AddPageBtn({ $target, initialState, addPage }) {
   };
 
   $addPageDiv.addEventListener("click", () => {
-    addPage();
+    const document = {
+      title: "제목 없음",
+      parent: null,
+    };
+    addPage(document);
   });
 
   this.render();

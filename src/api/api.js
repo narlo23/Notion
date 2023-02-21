@@ -1,5 +1,5 @@
 import { request } from "./base.js";
-
+import { API_END_POINT } from "./base.js";
 export const getDocuments = async () => {
   return await request("", { method: "GET" });
 };
@@ -8,14 +8,31 @@ export const getDocument = async (id) => {
   return await request(`/${id}`, { method: "GET" });
 };
 
-export const createDocument = async (document) => {
-  return await request("", { method: "POST", body: JSON.stringify(document) });
+export const createDocument = async (id) => {
+  return await fetch(API_END_POINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "x-username": "narlo",
+    },
+    body: JSON.stringify({
+      title: "test",
+      parent: id,
+    }),
+  });
 };
 
-export const modifyDocument = async (document, id) => {
-  return await request(`/${id}`, {
+export const modifyDocument = async (id) => {
+  return await fetch(`${API_END_POINT}/${id}`, {
     method: "PUT",
-    body: JSON.stringify(document),
+    headers: {
+      "Content-Type": "application/json",
+      "x-username": "narlo",
+    },
+    body: JSON.stringify({
+      title: "test",
+      content: "modify test",
+    }),
   });
 };
 
